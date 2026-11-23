@@ -208,14 +208,13 @@ class CronManager {
       }
     }
 
+    Logger.debug(`[CronManager] Finished executing podcast cron ${expression} for ${libraryItems.length} item(s)`)
+    this.podcastCronExpressionsExecuting = this.podcastCronExpressionsExecuting.filter((exp) => exp !== expression)
+
     // Stop and remove cron if no more library items
     if (!podcastCron.libraryItemIds.length) {
       this.removePodcastEpisodeCron(podcastCron)
-      return
     }
-
-    Logger.debug(`[CronManager] Finished executing podcast cron ${expression} for ${libraryItems.length} item(s)`)
-    this.podcastCronExpressionsExecuting = this.podcastCronExpressionsExecuting.filter((exp) => exp !== expression)
   }
 
   removePodcastEpisodeCron(podcastCron) {
