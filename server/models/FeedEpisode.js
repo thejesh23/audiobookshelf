@@ -2,7 +2,6 @@ const Path = require('path')
 const { DataTypes, Model } = require('sequelize')
 const uuidv4 = require('uuid').v4
 const Logger = require('../Logger')
-const date = require('../libs/dateAndTime')
 const { secondsToTimestamp } = require('../utils')
 
 class FeedEpisode extends Model {
@@ -145,7 +144,7 @@ class FeedEpisode extends Model {
     const episodeId = existingEpisodeId || uuidv4()
 
     // e.g. Track 1 will have a pub date before Track 2
-    const audiobookPubDate = date.format(new Date(pubDateStart.valueOf() + timeOffset), 'ddd, DD MMM YYYY HH:mm:ss [GMT]')
+    const audiobookPubDate = new Date(pubDateStart.valueOf() + timeOffset).toUTCString()
 
     const contentUrl = `/feed/${slug}/item/${episodeId}/media${Path.extname(audioTrack.metadata.filename)}`
 
